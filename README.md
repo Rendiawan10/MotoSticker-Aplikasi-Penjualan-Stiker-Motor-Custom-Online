@@ -1,4 +1,4 @@
-# <p align="center" style="margin-bottom: 0px;">MotoSticker<</p>
+# <p align="center" style="margin-bottom: 0px;">MotoSticker</p>
 ## <p align="center" style="margin-top: 0;">APLIKASI PENJUALAN STIKER MOTOR CUSTOM ONLINE</p>
 
 <p align="center">
