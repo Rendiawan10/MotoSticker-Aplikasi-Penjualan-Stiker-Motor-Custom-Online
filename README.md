@@ -49,9 +49,9 @@
 | Field       | Tipe Data                 | Keterangan     |
 | ----------- | ------------------------- | -------------- |
 | id          | INT(PK)                   | Primary Key    |
-| name        | VARCHAR(100)              | Nama pengguna  |
-| email       | VARCHAR(100)              | Email unik     |
-| password    | VARCHAR(255)              | Password       |
+| name        | STRING                    | Nama pengguna  |
+| email       | STRING                    | Email unik     |
+| password    | STRING                    | Password       |
 | role        | ENUM('admin', 'customer') | Peran pengguna |
 | created\_at | TIMESTAMP                 | Waktu dibuat   |
 | updated\_at | TIMESTAMP                 | Waktu diubah   |
@@ -61,10 +61,10 @@
 | Field       | Tipe Data    | Keterangan         |
 | ----------- | ------------ | ------------------ |
 | id          | INT(PK)      | Primary Key        |
-| name        | VARCHAR(100) | Nama stiker        |
+| name        | STRING       | Nama stiker        |
 | description | TEXT         | Deskripsi          |
 | price       | DOUBLE       | Harga              |
-| image\_url  | VARCHAR(255) | Link gambar produk |
+| image\_url  | STRING       | Link gambar produk |
 | created\_at | TIMESTAMP    | Waktu dibuat       |
 | updated\_at | TIMESTAMP    | Waktu diubah       |
 
@@ -105,7 +105,7 @@
 | id          | INT(PK)      | Primary Key           |
 | user\_id    | INT(FK)      | Relasi ke `users.id`  |
 | order\_id   | INT(FK)      | Relasi ke `orders.id` |
-| image\_url  | VARCHAR(255) | URL desain custom     |
+| image\_url  | STRING       | URL desain custom     |
 | notes       | TEXT         | Catatan pengguna      |
 | created\_at | TIMESTAMP    | Waktu dibuat          |
 
