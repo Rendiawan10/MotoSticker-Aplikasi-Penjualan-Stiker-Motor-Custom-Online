@@ -48,7 +48,7 @@
 ### 1. Tabel ```{users}```
 | Field       | Tipe Data                 | Keterangan     |
 | ----------- | ------------------------- | -------------- |
-| id          | INT (PK)                  | Primary Key    |
+| id          | INT(PK)                   | Primary Key    |
 | name        | VARCHAR(100)              | Nama pengguna  |
 | email       | VARCHAR(100)              | Email unik     |
 | password    | VARCHAR(255)              | Password       |
@@ -57,35 +57,70 @@
 | updated\_at | TIMESTAMP                 | Waktu diubah   |
 
 
-### 2. Tabel ```{products}```
-| Field       | Tipe Data    | Keterangan    |
-| ----------- | ------------ | ------------- |
-| id          | INT (PK)     | Primary Key   |
-| name        | VARCHAR(100) | Nama stiker   |
-| price       | DOUBLE       | Harga         |
-| image\_url  | VARCHAR(255) | Gambar produk |
-| created\_at | TIMESTAMP    | Waktu dibuat  |
-| updated\_at | TIMESTAMP    | Waktu diubah  |
+### 2. Tabel ```{Products}```
+| Field       | Tipe Data    | Keterangan         |
+| ----------- | ------------ | ------------------ |
+| id          | INT(PK)      | Primary Key        |
+| name        | VARCHAR(100) | Nama stiker        |
+| description | TEXT         | Deskripsi          |
+| price       | DOUBLE       | Harga              |
+| image\_url  | VARCHAR(255) | Link gambar produk |
+| created\_at | TIMESTAMP    | Waktu dibuat       |
+| updated\_at | TIMESTAMP    | Waktu diubah       |
 
 
-### 3. Tabel ```{order}```
-| Field        | Tipe Data                                      | Keterangan                        |
-| ------------ | ---------------------------------------------- | --------------------------------- |
-| id           | INT (PK)                                       | Primary Key                       |
-| user\_id     | INT (FK)                                       | Relasi ke `users.id`              |
-| product\_id  | INT (FK)                                       | Relasi ke `products.id`           |
-| quantity     | INT                                            | Jumlah item yang dibeli           |
-| total\_price | DOUBLE                                         | Total harga (qty x price)         |
-| custom\_url  | VARCHAR(255)                                   | URL file desain custom (opsional) |
-| notes        | TEXT                                           | Catatan pembeli                   |
-| status       | ENUM('pending','diproses','dikirim','selesai') | Status pesanan                    |
-| created\_at  | TIMESTAMP                                      | Waktu dibuat                      |
-| updated\_at  | TIMESTAMP                                      | Waktu diubah                      |
+### 3. Tabel ```{Carts}```
+| Field       | Tipe Data | Keterangan              |
+| ----------- | --------- | ----------------------- |
+| id          | INT(PK)   | Primary Key             |
+| user\_id    | INT(FK)   | Relasi ke `users.id`    |
+| product\_id | INT(FK)   | Relasi ke `products.id` |
+| quantity    | INT       | Jumlah produk           |
+| created\_at | TIMESTAMP | Waktu dibuat            |
+
+
+### 4. Tabel ```{Orders}```
+| Field        | Tipe Data                                         | Keterangan           |
+| ------------ | ------------------------------------------------- | -------------------- |
+| id           | INT(PK)                                           | Primary Key          |
+| user\_id     | INT(FK)                                           | Relasi ke `users.id` |
+| total\_price | DOUBLE                                            | Total harga pesanan  |
+| status       | ENUM('pending', 'diproses', 'dikirim', 'selesai') | Status pesanan       |
+| created\_at  | TIMESTAMP                                         | Waktu dibuat         |
+| updated\_at  | TIMESTAMP                                         | Waktu diubah         |
+
+
+### 5. Tabel ```{order_items}```
+| Field       | Tipe Data | Keterangan              |
+| ----------- | --------- | ----------------------- |
+| id          | INT(PK)   | Primary Key             |
+| order\_id   | INT(FK)   | Relasi ke `orders.id`   |
+| product\_id | INT(FK)   | Relasi ke `products.id` |
+| quantity    | INT       | Jumlah item             |
+
+
+### 6. Tabel ```{custom_designs}```
+| Field       | Tipe Data    | Keterangan            |
+| ----------- | ------------ | --------------------- |
+| id          | INT(PK)      | Primary Key           |
+| user\_id    | INT(FK)      | Relasi ke `users.id`  |
+| order\_id   | INT(FK)      | Relasi ke `orders.id` |
+| image\_url  | VARCHAR(255) | URL desain custom     |
+| notes       | TEXT         | Catatan pengguna      |
+| created\_at | TIMESTAMP    | Waktu dibuat          |
+
+
 
 
 ---
 ## Jenis relasi dan tabel yang berelasi
-| Tabel Asal  | Tabel Tujuan       | Relasi      | Keterangan                          |
-| ----------- | ------------------ | ----------- | ----------------------------------- |
-| users.id    | orders.user\_id    | One to Many | 1 user bisa memiliki banyak pesanan |
-| products.id | orders.product\_id | One to Many | 1 produk bisa dipesan berkali-kali  |
+| Tabel Asal    | Tabel Tujuan              | Relasi      | Keterangan                              |
+| ------------- | ------------------------- | ----------- | --------------------------------------- |
+| `users.id`    | `orders.user_id`          | One to Many | 1 user bisa memiliki banyak order       |
+| `users.id`    | `custom_designs.user_id`  | One to Many | 1 user bisa kirim banyak desain         |
+| `orders.id`   | `order_items.order_id`    | One to Many | 1 order memiliki banyak item            |
+| `products.id` | `order_items.product_id`  | One to Many | 1 produk bisa masuk ke banyak item      |
+| `users.id`    | `carts.user_id`           | One to Many | 1 user bisa punya banyak keranjang      |
+| `products.id` | `carts.product_id`        | One to Many | 1 produk bisa masuk ke banyak keranjang |
+| `orders.id`   | `custom_designs.order_id` | One to One  | 1 order hanya punya 1 desain custom     |
+
